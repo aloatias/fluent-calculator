@@ -7,7 +7,6 @@
         ICalculator Redo();
         int Result();
         ICalculator Save();
-        ICalculator Seed(int n);
         ICalculator Undo();
     }
 }

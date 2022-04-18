@@ -288,7 +288,6 @@ namespace Calculator.Tests
                 .Redo() // -> 11
                 .Save() // 11
                 .Plus(4)
-                .Seed(10)
                 .Result();
 
             // Assert

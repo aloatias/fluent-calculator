@@ -1,9 +1,8 @@
 ﻿namespace Calculator.App
 {
-    public class MyCalculator : ICalculator
+    public class MyCalculator : ICalculator, ISeedable
     {
         private bool _isSaved = false;
-        private bool _isSeeded = false;
         private int _result;
         private readonly Stack<IOperationType> _operations = new();
         private readonly Stack<IOperationType> _undoneOperations = new();
@@ -11,24 +10,18 @@
 
         public ICalculator Minus(int n)
         {
-            if (_isSeeded)
-            {
-                var operation = new MinusOperation(n);
-                _result = operation.Operate(_result);
-                _operations.Push(operation);
-            }
+            var operation = new MinusOperation(n);
+            _result = operation.Operate(_result);
+            _operations.Push(operation);
 
             return this;
         }
 
         public ICalculator Plus(int n)
         {
-            if (_isSeeded)
-            {
-                var operation = new PlusOperation(n);
-                _result = operation.Operate(_result);
-                _operations.Push(operation);
-            }
+            var operation = new PlusOperation(n);
+            _result = operation.Operate(_result);
+            _operations.Push(operation);
 
             return this;
         }
@@ -58,11 +51,7 @@
 
         public ICalculator Seed(int n)
         {
-            if (!_isSeeded)
-            {
-                _result = n;
-                _isSeeded = true;
-            }
+            _result = n;
             return this;
         }
 
