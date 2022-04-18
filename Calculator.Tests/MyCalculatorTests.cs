@@ -272,5 +272,27 @@ namespace Calculator.Tests
             // Assert
             Assert.Equal(expectedResult, actualResult);
         }
+
+        [Fact]
+        public void MultipleSeedingsIgnored_ReturnsOkResult()
+        {
+            // Arrange 
+            var calculator = new MyCalculator();
+            var expectedResult = 15;
+
+            // Act
+            var actualResult = calculator
+                .Seed(10)
+                .Plus(1)
+                .Undo()
+                .Redo() // -> 11
+                .Save() // 11
+                .Plus(4)
+                .Seed(10)
+                .Result();
+
+            // Assert
+            Assert.Equal(expectedResult, actualResult);
+        }
     }
 }

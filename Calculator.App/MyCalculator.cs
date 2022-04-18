@@ -3,6 +3,7 @@
     public class MyCalculator : ICalculator
     {
         private bool _isSaved = false;
+        private bool _isSeeded = false;
         private int _result;
         private readonly Stack<IOperationType> _operations = new();
         private readonly Stack<IOperationType> _undoneOperations = new();
@@ -10,18 +11,24 @@
 
         public ICalculator Minus(int n)
         {
-            var operation = new MinusOperation(n);
-            _result = operation.Operate(_result);
-            _operations.Push(operation);
+            if (_isSeeded)
+            {
+                var operation = new MinusOperation(n);
+                _result = operation.Operate(_result);
+                _operations.Push(operation);
+            }
 
             return this;
         }
 
         public ICalculator Plus(int n)
         {
-            var operation = new PlusOperation(n);
-            _result = operation.Operate(_result);
-            _operations.Push(operation);
+            if (_isSeeded)
+            {
+                var operation = new PlusOperation(n);
+                _result = operation.Operate(_result);
+                _operations.Push(operation);
+            }
 
             return this;
         }
@@ -51,7 +58,11 @@
 
         public ICalculator Seed(int n)
         {
-            _result = n;
+            if (!_isSeeded)
+            {
+                _result = n;
+                _isSeeded = true;
+            }
             return this;
         }
 
